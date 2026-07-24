@@ -1,0 +1,43 @@
+# Install package if needed
+# install.packages("DiagrammeR")
+
+library(DiagrammeR)
+
+grViz("
+
+digraph MDP {
+
+graph [
+  layout = dot
+  rankdir = TB
+]
+
+node [
+  shape = box
+  style = 'rounded,filled'
+  fontname = Arial
+  fontsize = 30
+  color = black
+  penwidth = 2
+]
+
+Start      [label='Start', fillcolor='#66BB6A']
+State      [label='Define States', fillcolor='#64B5F6']
+Action     [label='Define Actions', fillcolor='#FFD54F']
+Reward     [label='Reward Function', fillcolor='#FF8A65']
+Policy     [label='Initialize Policy', fillcolor='#BA68C8']
+Value      [label='Compute Value', fillcolor='#4DD0E1']
+Decision   [label='Optimal?', shape=diamond, fillcolor='#FFF176']
+End        [label='Optimal Policy', fillcolor='#81C784']
+
+Start -> State
+State -> Action
+Action -> Reward
+Reward -> Policy
+Policy -> Value
+Value -> Decision
+Decision -> Value [label='No']
+Decision -> End [label='Yes']
+
+}
+")
