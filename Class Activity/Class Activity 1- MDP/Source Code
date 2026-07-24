@@ -1,0 +1,88 @@
+# ===========================================
+# MODULE 1 - DATASET LOADING AND VISUALIZATION
+# ===========================================
+
+# Load Dataset
+df <- read.csv("~/Downloads/SampleData.csv")
+
+# Display Dataset
+cat("\n========== DATASET ==========\n")
+print(df)
+
+# ===========================================
+# Module 1 Summary
+# ===========================================
+
+cat("\n========== MODULE 1 SUMMARY ==========\n")
+cat("Dataset Loaded Successfully\n")
+cat("Total Records :", nrow(df), "\n")
+cat("Total Ingredients :", length(unique(df$Ingredient)), "\n")
+cat("Total Products :", length(unique(df$Product)), "\n")
+cat("Unique QMerged Labels :", length(unique(df$QMerged_label)), "\n")
+
+cat("\nIngredients :\n")
+print(unique(df$Ingredient))
+
+cat("\nProducts :\n")
+print(unique(df$Product))
+
+cat("======================================\n")
+
+# ===========================================
+# Cost Statistics
+# ===========================================
+
+cat("\n========== COST STATISTICS ==========\n")
+cat("Minimum Cost :", min(df$Real_Cost), "\n")
+cat("Maximum Cost :", max(df$Real_Cost), "\n")
+cat("Average Cost :", mean(df$Real_Cost), "\n")
+
+# ===========================================
+# Total Cost by Ingredient
+# ===========================================
+
+ingredient_cost <- aggregate(Real_Cost ~ Ingredient,
+                             data = df,
+                             sum)
+
+barplot(
+  ingredient_cost$Real_Cost,
+  names.arg = ingredient_cost$Ingredient,
+  col = "skyblue",
+  main = "Total Cost by Ingredient",
+  xlab = "Ingredient",
+  ylab = "Total Cost"
+)
+
+# ===========================================
+# Total Cost by Product
+# ===========================================
+
+product_cost <- aggregate(Real_Cost ~ Product,
+                          data = df,
+                          sum)
+
+barplot(
+  product_cost$Real_Cost,
+  names.arg = product_cost$Product,
+  col = "lightgreen",
+  main = "Total Cost by Product",
+  xlab = "Product",
+  ylab = "Total Cost"
+)
+
+# ===========================================
+# QMerged Label Distribution
+# ===========================================
+
+label_count <- table(df$QMerged_label)
+
+barplot(
+  label_count,
+  col = "orange",
+  main = "QMerged Label Distribution",
+  xlab = "QMerged Label",
+  ylab = "Frequency"
+)
+
+cat("\nProgram Executed Successfully.\n")
